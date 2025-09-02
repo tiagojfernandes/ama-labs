@@ -177,7 +177,7 @@ echo "Starting Terraform deployment..."
 echo "============================================="
 
 # Navigate to the environment directory
-cd "$(dirname "$0")/environment/prod"
+cd "ama-labs/environment/prod"
 
 # Create terraform.tfvars with the collected information
 cat > terraform.tfvars << EOF
