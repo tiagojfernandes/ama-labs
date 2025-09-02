@@ -1,0 +1,16 @@
+# Example Terraform Variables File
+# Copy this file to terraform.tfvars and update with your values
+
+# Admin username for all virtual machines (your alias)
+admin_username = "youralias"
+
+# Admin password for all virtual machines
+# Must be at least 12 characters and meet Azure complexity requirements
+# (uppercase, lowercase, number, special character recommended)
+admin_password = "YourSecurePassword123!"
+
+# Optional: Override default location
+# location = "West US 3"
+
+# Optional: Override default environment
+# environment = "Production"
