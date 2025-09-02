@@ -32,6 +32,10 @@ resource "azurerm_network_interface" "lin_ama_portal_dep_nic" {
 resource "azurerm_network_interface_security_group_association" "lin_ama_portal_dep_nsg_assoc" {
   network_interface_id      = azurerm_network_interface.lin_ama_portal_dep_nic.id
   network_security_group_id = var.nsg_id
+  
+  depends_on = [
+    azurerm_network_interface.lin_ama_portal_dep_nic
+  ]
 }
 
 resource "azurerm_linux_virtual_machine" "lin_ama_portal_dep" {
@@ -65,6 +69,10 @@ resource "azurerm_linux_virtual_machine" "lin_ama_portal_dep" {
   tags = merge(var.tags, {
     Purpose = "DCR Portal Deployment Lab"
   })
+  
+  depends_on = [
+    azurerm_network_interface_security_group_association.lin_ama_portal_dep_nsg_assoc
+  ]
 }
 
 # LinAMAPSDeploy
