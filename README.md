@@ -4,11 +4,16 @@ Automated deployment of Azure Virtual Machine infrastructure for Azure Monitor A
 
 ## 🚀 Quick Deployment
 
-Run this command in **Azure Cloud Shell** or any bash environment:
+**Clone and run in Azure Cloud Shell or any bash environment:**
 
 ```bash
-curl -s https://raw.githubusercontent.com/tiagojfernandes/ama-labs/main/init-lab.sh | bash
+git clone https://github.com/tiagojfernandes/ama-labs.git
+cd ama-labs
+chmod +x init-lab.sh
+./init-lab.sh
 ```
+
+💡 **Note:** Interactive password prompts require the script to be run directly, not via curl pipe.
 
 ## What Gets Deployed
 
