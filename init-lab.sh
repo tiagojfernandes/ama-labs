@@ -74,19 +74,46 @@ done
 echo "Preparation complete!"
 echo ""
 
-# Get the current user from Azure CLI session
-CURRENT_USER=$(az account show --query user.name --output tsv 2>/dev/null)
-if [ -z "$CURRENT_USER" ]; then
-    echo -e "${YELLOW}Warning: Unable to detect Azure user. Please ensure you are logged into Azure CLI.${NC}"
-    prompt_input "Enter your username (alias)" USERNAME
-else
-    # Extract potential alias from email (everything before @ and before first dot if present)
-    DETECTED_ALIAS=$(echo "$CURRENT_USER" | cut -d'@' -f1 | cut -d'.' -f1)
-    echo -e "${GREEN}Detected Azure user: $CURRENT_USER${NC}"
-    echo -e "${CYAN}Suggested username: $DETECTED_ALIAS${NC}"
-    
-    prompt_input "Confirm username or enter your preferred alias" USERNAME "$DETECTED_ALIAS"
-fi
+# Prompt for username with validation
+echo ""
+echo -e "${CYAN}Please enter the admin username for all VMs${NC}"
+echo -e "${YELLOW}(Recommend using your company alias - e.g., 'johndoe', 'jsmith')${NC}"
+
+while true; do
+  read -p "$(echo -e "${CYAN}Admin username: ${NC}")" USERNAME
+  
+  # Validate username is not empty
+  if [ -z "$USERNAME" ]; then
+    echo -e "${RED}Username cannot be empty. Please try again.${NC}"
+    continue
+  fi
+  
+  # Validate username format (alphanumeric and hyphens/underscores only)
+  if [[ ! "$USERNAME" =~ ^[a-zA-Z][a-zA-Z0-9_-]*$ ]]; then
+    echo -e "${RED}Username must start with a letter and contain only letters, numbers, hyphens, and underscores.${NC}"
+    continue
+  fi
+  
+  # Validate username length
+  if [[ ${#USERNAME} -lt 3 ]]; then
+    echo -e "${RED}Username must be at least 3 characters long.${NC}"
+    continue
+  fi
+  
+  if [[ ${#USERNAME} -gt 20 ]]; then
+    echo -e "${RED}Username must be 20 characters or less.${NC}"
+    continue
+  fi
+  
+  # Check for reserved names
+  if [[ "$USERNAME" =~ ^(admin|administrator|root|guest|user|test)$ ]]; then
+    echo -e "${RED}Username cannot be a reserved name (admin, administrator, root, guest, user, test).${NC}"
+    continue
+  fi
+  
+  echo -e "${GREEN}✅ Username '$USERNAME' accepted${NC}"
+  break
+done
 
 # Prompt for password
 echo ""
