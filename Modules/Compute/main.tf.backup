@@ -72,8 +72,7 @@ resource "azurerm_public_ip" "lin_ama_ps_deploy_pip" {
   name                = "LinAMAPSDeploy-pip"
   resource_group_name = var.resource_group_name
   location            = var.location
-  allocation_method   = "Static"
-  sku                 = "Standard"
+  allocation_method   = "Static"`r`n  sku                 = "Standard"
   zones               = ["2"]
 
   tags = var.tags
@@ -137,8 +136,7 @@ resource "azurerm_public_ip" "lin_ama_cli_deploy_pip" {
   name                = "LinAMACLIDeploy-pip"
   resource_group_name = var.resource_group_name
   location            = var.location
-  allocation_method   = "Static"
-  sku                 = "Standard"
+  allocation_method   = "Static"`r`n  sku                 = "Standard"
   zones               = ["2"]
 
   tags = var.tags
@@ -202,8 +200,7 @@ resource "azurerm_public_ip" "lin_ama_policy_dep_pip" {
   name                = "LinAMAPolicyDep-pip"
   resource_group_name = var.resource_group_name
   location            = var.location
-  allocation_method   = "Static"
-  sku                 = "Standard"
+  allocation_method   = "Static"`r`n  sku                 = "Standard"
   zones               = ["2"]
 
   tags = var.tags
@@ -268,8 +265,7 @@ resource "azurerm_public_ip" "win_ama_portal_dep_pip" {
   name                = "WinAMAPortalDep-pip"
   resource_group_name = var.resource_group_name
   location            = var.location
-  allocation_method   = "Static"
-  sku                 = "Standard"
+  allocation_method   = "Static"`r`n  sku                 = "Standard"
   zones               = ["2"]
 
   tags = var.tags
@@ -331,8 +327,7 @@ resource "azurerm_public_ip" "win_ama_ps_deploy_pip" {
   name                = "WinAMAPSDeploy-pip"
   resource_group_name = var.resource_group_name
   location            = var.location
-  allocation_method   = "Static"
-  sku                 = "Standard"
+  allocation_method   = "Static"`r`n  sku                 = "Standard"
   zones               = ["2"]
 
   tags = var.tags
@@ -394,8 +389,7 @@ resource "azurerm_public_ip" "win_ama_cli_deploy_pip" {
   name                = "WinAMACLIDeploy-pip"
   resource_group_name = var.resource_group_name
   location            = var.location
-  allocation_method   = "Static"
-  sku                 = "Standard"
+  allocation_method   = "Static"`r`n  sku                 = "Standard"
   zones               = ["2"]
 
   tags = var.tags
@@ -457,8 +451,7 @@ resource "azurerm_public_ip" "win_ama_policy_dep_pip" {
   name                = "WinAMAPolicyDep-pip"
   resource_group_name = var.resource_group_name
   location            = var.location
-  allocation_method   = "Static"
-  sku                 = "Standard"
+  allocation_method   = "Static"`r`n  sku                 = "Standard"
   zones               = ["2"]
 
   tags = var.tags

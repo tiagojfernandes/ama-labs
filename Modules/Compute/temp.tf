@@ -73,7 +73,6 @@ resource "azurerm_public_ip" "lin_ama_ps_deploy_pip" {
   resource_group_name = var.resource_group_name
   location            = var.location
   allocation_method   = "Static"
-  sku                 = "Standard"
   zones               = ["2"]
 
   tags = var.tags
@@ -138,7 +137,6 @@ resource "azurerm_public_ip" "lin_ama_cli_deploy_pip" {
   resource_group_name = var.resource_group_name
   location            = var.location
   allocation_method   = "Static"
-  sku                 = "Standard"
   zones               = ["2"]
 
   tags = var.tags
@@ -203,7 +201,6 @@ resource "azurerm_public_ip" "lin_ama_policy_dep_pip" {
   resource_group_name = var.resource_group_name
   location            = var.location
   allocation_method   = "Static"
-  sku                 = "Standard"
   zones               = ["2"]
 
   tags = var.tags
@@ -269,7 +266,6 @@ resource "azurerm_public_ip" "win_ama_portal_dep_pip" {
   resource_group_name = var.resource_group_name
   location            = var.location
   allocation_method   = "Static"
-  sku                 = "Standard"
   zones               = ["2"]
 
   tags = var.tags
@@ -332,7 +328,6 @@ resource "azurerm_public_ip" "win_ama_ps_deploy_pip" {
   resource_group_name = var.resource_group_name
   location            = var.location
   allocation_method   = "Static"
-  sku                 = "Standard"
   zones               = ["2"]
 
   tags = var.tags
@@ -395,7 +390,6 @@ resource "azurerm_public_ip" "win_ama_cli_deploy_pip" {
   resource_group_name = var.resource_group_name
   location            = var.location
   allocation_method   = "Static"
-  sku                 = "Standard"
   zones               = ["2"]
 
   tags = var.tags
@@ -458,7 +452,6 @@ resource "azurerm_public_ip" "win_ama_policy_dep_pip" {
   resource_group_name = var.resource_group_name
   location            = var.location
   allocation_method   = "Static"
-  sku                 = "Standard"
   zones               = ["2"]
 
   tags = var.tags
