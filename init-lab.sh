@@ -197,6 +197,9 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+echo -e "${CYAN}Planning Terraform deployment...${NC}"
+terraform plan
+
 # Apply the configuration
 echo ""
 echo -e "${CYAN}Applying Terraform configuration...${NC}"
