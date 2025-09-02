@@ -201,7 +201,7 @@ fi
 echo ""
 echo -e "${CYAN}Applying Terraform configuration...${NC}"
 echo -e "${YELLOW}This may take 10-15 minutes to create all resources.${NC}"
-terraform apply
+terraform apply -auto-approve
 
 if [ $? -eq 0 ]; then
     echo ""
