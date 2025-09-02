@@ -30,7 +30,7 @@ resource "azurerm_network_interface" "lin_ama_portal_dep_nic" {
 
 resource "azurerm_network_interface_security_group_association" "lin_ama_portal_dep_nsg_assoc" {
   network_interface_id      = azurerm_network_interface.lin_ama_portal_dep_nic.id
-  network_security_group_id = var.linux_nsg_id
+  network_security_group_id = var.nsg_id
 }
 
 resource "azurerm_linux_virtual_machine" "lin_ama_portal_dep" {
@@ -94,7 +94,7 @@ resource "azurerm_network_interface" "lin_ama_ps_deploy_nic" {
 
 resource "azurerm_network_interface_security_group_association" "lin_ama_ps_deploy_nsg_assoc" {
   network_interface_id      = azurerm_network_interface.lin_ama_ps_deploy_nic.id
-  network_security_group_id = var.linux_nsg_id
+  network_security_group_id = var.nsg_id
 }
 
 resource "azurerm_linux_virtual_machine" "lin_ama_ps_deploy" {
@@ -158,7 +158,7 @@ resource "azurerm_network_interface" "lin_ama_cli_deploy_nic" {
 
 resource "azurerm_network_interface_security_group_association" "lin_ama_cli_deploy_nsg_assoc" {
   network_interface_id      = azurerm_network_interface.lin_ama_cli_deploy_nic.id
-  network_security_group_id = var.linux_nsg_id
+  network_security_group_id = var.nsg_id
 }
 
 resource "azurerm_linux_virtual_machine" "lin_ama_cli_deploy" {
@@ -222,7 +222,7 @@ resource "azurerm_network_interface" "lin_ama_policy_dep_nic" {
 
 resource "azurerm_network_interface_security_group_association" "lin_ama_policy_dep_nsg_assoc" {
   network_interface_id      = azurerm_network_interface.lin_ama_policy_dep_nic.id
-  network_security_group_id = var.linux_nsg_id
+  network_security_group_id = var.nsg_id
 }
 
 resource "azurerm_linux_virtual_machine" "lin_ama_policy_dep" {
@@ -287,7 +287,7 @@ resource "azurerm_network_interface" "win_ama_portal_dep_nic" {
 
 resource "azurerm_network_interface_security_group_association" "win_ama_portal_dep_nsg_assoc" {
   network_interface_id      = azurerm_network_interface.win_ama_portal_dep_nic.id
-  network_security_group_id = var.windows_nsg_id
+  network_security_group_id = var.nsg_id
 }
 
 resource "azurerm_windows_virtual_machine" "win_ama_portal_dep" {
@@ -349,7 +349,7 @@ resource "azurerm_network_interface" "win_ama_ps_deploy_nic" {
 
 resource "azurerm_network_interface_security_group_association" "win_ama_ps_deploy_nsg_assoc" {
   network_interface_id      = azurerm_network_interface.win_ama_ps_deploy_nic.id
-  network_security_group_id = var.windows_nsg_id
+  network_security_group_id = var.nsg_id
 }
 
 resource "azurerm_windows_virtual_machine" "win_ama_ps_deploy" {
@@ -411,7 +411,7 @@ resource "azurerm_network_interface" "win_ama_cli_deploy_nic" {
 
 resource "azurerm_network_interface_security_group_association" "win_ama_cli_deploy_nsg_assoc" {
   network_interface_id      = azurerm_network_interface.win_ama_cli_deploy_nic.id
-  network_security_group_id = var.windows_nsg_id
+  network_security_group_id = var.nsg_id
 }
 
 resource "azurerm_windows_virtual_machine" "win_ama_cli_deploy" {
@@ -473,7 +473,7 @@ resource "azurerm_network_interface" "win_ama_policy_dep_nic" {
 
 resource "azurerm_network_interface_security_group_association" "win_ama_policy_dep_nsg_assoc" {
   network_interface_id      = azurerm_network_interface.win_ama_policy_dep_nic.id
-  network_security_group_id = var.windows_nsg_id
+  network_security_group_id = var.nsg_id
 }
 
 resource "azurerm_windows_virtual_machine" "win_ama_policy_dep" {

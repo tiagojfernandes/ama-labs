@@ -29,13 +29,8 @@ variable "subnet_id" {
   type        = string
 }
 
-variable "linux_nsg_id" {
-  description = "The ID of the Linux network security group"
-  type        = string
-}
-
-variable "windows_nsg_id" {
-  description = "The ID of the Windows network security group"
+variable "nsg_id" {
+  description = "The ID of the shared network security group"
   type        = string
 }
 

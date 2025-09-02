@@ -33,7 +33,7 @@ module "monitor" {
 
   workspace_name      = "AMATrainingWorkspace"
   resource_group_name = azurerm_resource_group.ama_training.name
-  location           = azurerm_resource_group.ama_training.location
+  location            = azurerm_resource_group.ama_training.location
 
   tags = {
     Environment = "Production"
@@ -49,7 +49,7 @@ module "network" {
   source = "../../Modules/Network"
 
   resource_group_name = azurerm_resource_group.ama_training.name
-  location           = azurerm_resource_group.ama_training.location
+  location            = azurerm_resource_group.ama_training.location
 
   tags = {
     Environment = "Production"
@@ -65,14 +65,13 @@ module "compute" {
   source = "../../Modules/Compute"
 
   resource_group_name = azurerm_resource_group.ama_training.name
-  location           = azurerm_resource_group.ama_training.location
-  admin_username     = var.admin_username
-  admin_password     = var.admin_password
+  location            = azurerm_resource_group.ama_training.location
+  admin_username      = var.admin_username
+  admin_password      = var.admin_password
 
   # Network inputs from Network module
-  subnet_id      = module.network.subnet_id
-  linux_nsg_id   = module.network.linux_nsg_id
-  windows_nsg_id = module.network.windows_nsg_id
+  subnet_id = module.network.subnet_id
+  nsg_id    = module.network.nsg_id
 
   tags = {
     Environment = "Production"

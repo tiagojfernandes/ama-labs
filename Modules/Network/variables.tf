@@ -35,16 +35,10 @@ variable "subnet_address_prefixes" {
   default     = ["10.0.1.0/24"]
 }
 
-variable "linux_nsg_name" {
-  description = "The name of the Linux network security group"
+variable "nsg_name" {
+  description = "The name of the shared network security group"
   type        = string
-  default     = "linux-nsg"
-}
-
-variable "windows_nsg_name" {
-  description = "The name of the Windows network security group"
-  type        = string
-  default     = "windows-nsg"
+  default     = "ama-training-nsg"
 }
 
 variable "tags" {

@@ -18,13 +18,13 @@ resource "azurerm_subnet" "ama_training_subnet" {
   address_prefixes     = var.subnet_address_prefixes
 }
 
-# Network Security Group for Linux VMs
-resource "azurerm_network_security_group" "linux_nsg" {
-  name                = var.linux_nsg_name
+# Shared Network Security Group for all VMs in the subnet
+resource "azurerm_network_security_group" "ama_training_nsg" {
+  name                = var.nsg_name
   location            = var.location
   resource_group_name = var.resource_group_name
 
-  # SSH access rule
+  # SSH access rule for Linux VMs
   security_rule {
     name                       = "SSH"
     priority                   = 1001
@@ -37,32 +37,10 @@ resource "azurerm_network_security_group" "linux_nsg" {
     destination_address_prefix = "*"
   }
 
-  # Optional: Add more restrictive SSH rule (uncomment and modify as needed)
-  # security_rule {
-  #   name                       = "SSH_Restricted"
-  #   priority                   = 1000
-  #   direction                  = "Inbound"
-  #   access                     = "Allow"
-  #   protocol                   = "Tcp"
-  #   source_port_range          = "*"
-  #   destination_port_range     = "22"
-  #   source_address_prefix      = "YOUR_PUBLIC_IP/32"  # Replace with your IP
-  #   destination_address_prefix = "*"
-  # }
-
-  tags = var.tags
-}
-
-# Network Security Group for Windows VMs
-resource "azurerm_network_security_group" "windows_nsg" {
-  name                = var.windows_nsg_name
-  location            = var.location
-  resource_group_name = var.resource_group_name
-
-  # RDP access rule
+  # RDP access rule for Windows VMs
   security_rule {
     name                       = "RDP"
-    priority                   = 1001
+    priority                   = 1002
     direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "Tcp"
@@ -72,44 +50,24 @@ resource "azurerm_network_security_group" "windows_nsg" {
     destination_address_prefix = "*"
   }
 
-  # Optional: Add more restrictive RDP rule (uncomment and modify as needed)
-  # security_rule {
-  #   name                       = "RDP_Restricted"
-  #   priority                   = 1000
-  #   direction                  = "Inbound"
-  #   access                     = "Allow"
-  #   protocol                   = "Tcp"
-  #   source_port_range          = "*"
-  #   destination_port_range     = "3389"
-  #   source_address_prefix      = "YOUR_PUBLIC_IP/32"  # Replace with your IP
-  #   destination_address_prefix = "*"
-  # }
-
-  # Optional: Allow HTTP for web access if needed
-  # security_rule {
-  #   name                       = "HTTP"
-  #   priority                   = 1002
-  #   direction                  = "Inbound"
-  #   access                     = "Allow"
-  #   protocol                   = "Tcp"
-  #   source_port_range          = "*"
-  #   destination_port_range     = "80"
-  #   source_address_prefix      = "*"
-  #   destination_address_prefix = "*"
-  # }
-
-  # Optional: Allow HTTPS for secure web access if needed
-  # security_rule {
-  #   name                       = "HTTPS"
-  #   priority                   = 1003
-  #   direction                  = "Inbound"
-  #   access                     = "Allow"
-  #   protocol                   = "Tcp"
-  #   source_port_range          = "*"
-  #   destination_port_range     = "443"
-  #   source_address_prefix      = "*"
-  #   destination_address_prefix = "*"
-  # }
+  # Allow outbound internet access
+  security_rule {
+    name                       = "AllowInternetOutbound"
+    priority                   = 1000
+    direction                  = "Outbound"
+    access                     = "Allow"
+    protocol                   = "*"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "Internet"
+  }
 
   tags = var.tags
+}
+
+# Associate NSG with subnet
+resource "azurerm_subnet_network_security_group_association" "ama_training_nsg_assoc" {
+  subnet_id                 = azurerm_subnet.ama_training_subnet.id
+  network_security_group_id = azurerm_network_security_group.ama_training_nsg.id
 }
