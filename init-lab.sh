@@ -68,7 +68,7 @@ cd ama-labs
 
 # Register necessary Azure providers
 echo "Please wait while we prepare everything for you..."
-for ns in Microsoft.Insights Microsoft.OperationalInsights Microsoft.Monitor Microsoft.SecurityInsights Microsoft.Dashboard; do
+for ns in Microsoft.Insights Microsoft.OperationalInsights Microsoft.Monitor Microsoft.Security Microsoft.Compute Microsoft.SecurityInsights Microsoft.Dashboard; do
   register_provider "$ns"
 done
 echo "Preparation complete!"
