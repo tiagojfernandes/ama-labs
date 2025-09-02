@@ -77,13 +77,15 @@ echo ""
 # Get the current user from Azure CLI session
 CURRENT_USER=$(az account show --query user.name --output tsv 2>/dev/null)
 if [ -z "$CURRENT_USER" ]; then
-    echo "Warning: Unable to detect Azure user. Please ensure you are logged into Azure CLI."
-    read -p "Enter your username (youralias): " USERNAME
+    echo -e "${YELLOW}Warning: Unable to detect Azure user. Please ensure you are logged into Azure CLI.${NC}"
+    prompt_input "Enter your username (alias)" USERNAME
 else
-    # Extract username from email (everything before @)
-    USERNAME=$(echo "$CURRENT_USER" | cut -d'@' -f1)
-    echo "Detected Azure user: $CURRENT_USER"
-    echo "Using username: $USERNAME"
+    # Extract potential alias from email (everything before @ and before first dot if present)
+    DETECTED_ALIAS=$(echo "$CURRENT_USER" | cut -d'@' -f1 | cut -d'.' -f1)
+    echo -e "${GREEN}Detected Azure user: $CURRENT_USER${NC}"
+    echo -e "${CYAN}Suggested username: $DETECTED_ALIAS${NC}"
+    
+    prompt_input "Confirm username or enter your preferred alias" USERNAME "$DETECTED_ALIAS"
 fi
 
 # Prompt for password
