@@ -3,9 +3,75 @@
 # AMA Labs Infrastructure Deployment Script
 # This script initializes the AMA Training lab environment
 
+set -e
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+CYAN='\033[0;36m'
+NC='\033[0m' # No Color
+
+# -------------------------------
+# Functions
+# -------------------------------
+
+# Function to prompt for user input with validation
+prompt_input() {
+  local prompt_text="$1"
+  local var_name="$2"
+  local default_value="$3"
+  
+  while true; do
+    if [ -n "$default_value" ]; then
+      read -p "$(echo -e "${CYAN}$prompt_text [$default_value]: ${NC}")" user_input
+      user_input=${user_input:-$default_value}
+    else
+      read -p "$(echo -e "${CYAN}$prompt_text: ${NC}")" user_input
+    fi
+    
+    if [ -n "$user_input" ]; then
+      eval "$var_name='$user_input'"
+      break
+    else
+      echo -e "${RED}This field cannot be empty. Please try again.${NC}"
+    fi
+  done
+}
+
+# Register Azure resource provider if not yet registered
+register_provider() {
+  local ns=$1
+  local status=$(az provider show --namespace "$ns" --query "registrationState" -o tsv 2>/dev/null || echo "NotRegistered")
+
+  if [ "$status" != "Registered" ]; then
+    az provider register --namespace "$ns" > /dev/null 2>&1
+    until [ "$(az provider show --namespace "$ns" --query "registrationState" -o tsv)" == "Registered" ]; do
+      sleep 5
+    done
+  fi
+}
+
 echo "============================================="
 echo "   AMA Training Lab Setup"
 echo "============================================="
+echo ""
+
+# Clone the repo (skip if already cloned)
+if [ ! -d "ama-labs" ]; then
+  echo -e "${CYAN}Cloning ama-labs repository...${NC}"
+  git clone https://github.com/tiagojfernandes/ama-labs.git
+fi
+
+# Change to the project directory
+cd ama-labs
+
+# Register necessary Azure providers
+echo "Please wait while we prepare everything for you..."
+for ns in Microsoft.Insights Microsoft.OperationalInsights Microsoft.Monitor Microsoft.SecurityInsights Microsoft.Dashboard; do
+  register_provider "$ns"
+done
+echo "Preparation complete!"
 echo ""
 
 # Get the current user from Azure CLI session
@@ -22,25 +88,37 @@ fi
 
 # Prompt for password
 echo ""
-echo "Please enter the password to be used for all VM admin accounts:"
-echo "(Password will be hidden for security)"
-read -s -p "Password: " PASSWORD
-echo ""
+echo -e "${CYAN}Please enter the password to be used for all VM admin accounts:${NC}"
+echo -e "${YELLOW}(Password must be at least 12 characters with uppercase, lowercase, digit, and special character)${NC}"
 
-# Validate password is not empty
-if [ -z "$PASSWORD" ]; then
-    echo "Error: Password cannot be empty."
-    exit 1
-fi
+while true; do
+  read -s -p "$(echo -e "${CYAN}Enter admin password: ${NC}")" ADMIN_PASSWORD
+  echo ""
+  read -s -p "$(echo -e "${CYAN}Confirm admin password: ${NC}")" ADMIN_PASSWORD_CONFIRM
+  echo ""
+  
+  if [ "$ADMIN_PASSWORD" != "$ADMIN_PASSWORD_CONFIRM" ]; then
+    echo -e "${RED}Passwords do not match. Please try again.${NC}"
+    continue
+  fi
+  
+  # Basic password validation
+  if [[ ${#ADMIN_PASSWORD} -lt 12 ]]; then
+    echo -e "${RED}Password must be at least 12 characters long.${NC}"
+    continue
+  fi
+  
+  if [[ ! "$ADMIN_PASSWORD" =~ [A-Z] ]] || [[ ! "$ADMIN_PASSWORD" =~ [a-z] ]] || [[ ! "$ADMIN_PASSWORD" =~ [0-9] ]] || [[ ! "$ADMIN_PASSWORD" =~ [^A-Za-z0-9] ]]; then
+    echo -e "${RED}Password must contain uppercase, lowercase, digit, and special character.${NC}"
+    continue
+  fi
+  
+  echo -e "${GREEN}✅ Password accepted${NC}"
+  break
+done
 
-# Confirm password
-read -s -p "Confirm password: " CONFIRM_PASSWORD
-echo ""
-
-if [ "$PASSWORD" != "$CONFIRM_PASSWORD" ]; then
-    echo "Error: Passwords do not match."
-    exit 1
-fi
+# Set PASSWORD variable for compatibility with existing code
+PASSWORD="$ADMIN_PASSWORD"
 
 echo ""
 echo "Configuration Summary:"
