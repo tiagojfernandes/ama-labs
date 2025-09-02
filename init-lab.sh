@@ -209,27 +209,22 @@ fi
 
 # Apply the configuration
 echo ""
-read -p "Apply the Terraform configuration? (y/N): " APPLY_CONFIRM
-if [[ "$APPLY_CONFIRM" =~ ^[Yy]$ ]]; then
-    echo "Applying Terraform configuration..."
-    terraform apply -auto-approve
-    
-    if [ $? -eq 0 ]; then
-        echo ""
-        echo "============================================="
-        echo "   Deployment completed successfully!"
-        echo "============================================="
-        echo ""
-        echo "Your AMA Training lab environment is now ready."
-        echo "You can access your VMs using the following credentials:"
-        echo "- Username: $USERNAME"
-        echo "- Password: [The password you provided]"
-        echo ""
-        echo "Check the Azure Portal to see your deployed resources."
-    else
-        echo "Error: Terraform apply failed."
-        exit 1
-    fi
+echo "Applying Terraform configuration..."
+terraform apply -auto-approve
+
+if [ $? -eq 0 ]; then
+    echo ""
+    echo "============================================="
+    echo "   Deployment completed successfully!"
+    echo "============================================="
+    echo ""
+    echo "Your AMA Training lab environment is now ready."
+    echo "You can access your VMs using the following credentials:"
+    echo "- Username: $USERNAME"
+    echo "- Password: [The password you provided]"
+    echo ""
+    echo "Check the Azure Portal to see your deployed resources."
 else
-    echo "Deployment cancelled."
+    echo "Error: Terraform apply failed."
+    exit 1
 fi
