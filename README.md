@@ -2,15 +2,17 @@
 
 Automated deployment of Azure Virtual Machine infrastructure for Azure Monitor Agent (AMA) training labs.
 
-## 🚀 Quick Deployment
+## 🚀 Quick Start (Recommended)
 
-**Clone and run in Azure Cloud Shell or any bash environment:**
+**The easiest way to deploy this lab is using Azure Portal Bash:**
+
+1. Open [Azure Portal](https://portal.azure.com)
+2. Click on the **Cloud Shell** icon (terminal icon in the top menu)
+3. Select **Bash** when prompted
+4. Run this single command:
 
 ```bash
-git clone https://github.com/tiagojfernandes/ama-labs.git
-cd ama-labs
-chmod +x init-lab.sh
-./init-lab.sh
+bash <(curl -s https://raw.githubusercontent.com/microsoft/amelabs/refs/heads/main/azmon-lab-agents-essentials/init-lab.sh)
 ```
 
 💡 **Note:** Interactive password prompts require the script to be run directly, not via curl pipe.
