@@ -197,46 +197,11 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# Validate Terraform configuration
-echo ""
-echo -e "${CYAN}Validating Terraform configuration...${NC}"
-terraform validate
-
-if [ $? -ne 0 ]; then
-    echo -e "${RED}Error: Terraform configuration validation failed.${NC}"
-    echo -e "${YELLOW}Please check your Terraform files for syntax errors.${NC}"
-    exit 1
-fi
-
-echo -e "${GREEN}✅ Configuration validation passed${NC}"
-
-# Plan the deployment
-echo ""
-echo -e "${CYAN}Creating deployment plan...${NC}"
-echo -e "${YELLOW}This will show you what resources will be created.${NC}"
-echo ""
-
-terraform plan -out=tfplan
-
-if [ $? -ne 0 ]; then
-    echo -e "${RED}Error: Terraform planning failed.${NC}"
-    echo -e "${YELLOW}Common issues:${NC}"
-    echo -e "${YELLOW}- Check if you have sufficient Azure permissions${NC}"
-    echo -e "${YELLOW}- Verify your Azure subscription has enough quota${NC}"
-    echo -e "${YELLOW}- Ensure West US 3 region is available${NC}"
-    exit 1
-fi
-
-echo ""
-echo -e "${GREEN}✅ Plan created successfully${NC}"
-echo -e "${CYAN}Resources to be created: $(terraform show -json tfplan | grep '"create"' | wc -l)${NC}"
-echo ""
-
 # Apply the configuration
 echo ""
 echo -e "${CYAN}Applying Terraform configuration...${NC}"
 echo -e "${YELLOW}This may take 10-15 minutes to create all resources.${NC}"
-terraform apply tfplan
+terraform apply
 
 if [ $? -eq 0 ]; then
     echo ""
