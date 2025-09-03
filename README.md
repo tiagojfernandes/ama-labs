@@ -91,8 +91,7 @@ ama-labs/
 ├── init-lab.sh              # One-click deployment script
 ├── environment/prod/         # Terraform configuration
 ├── Modules/                  # Terraform modules
-│   ├── monitor/             # Log Analytics Workspace
-│   ├── Network/             # VNet, NSG, networking
-│   └── Compute/             # Virtual Machines
-└── Scripts/                 # PowerShell automation scripts
+    ├── monitor/             # Log Analytics Workspace
+    ├── Network/             # VNet, NSG, networking
+    └── Compute/             # Virtual Machines
 ```
