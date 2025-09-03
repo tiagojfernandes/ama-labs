@@ -12,7 +12,7 @@ Automated deployment of Azure Virtual Machine infrastructure for Azure Monitor A
 4. Run this single command:
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/microsoft/amelabs/refs/heads/main/azmon-lab-agents-essentials/init-lab.sh)
+bash <(curl -s https://raw.githubusercontent.com/tiagojfernandes/ama-labs/refs/heads/main/init-lab.sh)
 ```
 
 💡 **Note:** Interactive password prompts require the script to be run directly, not via curl pipe.
