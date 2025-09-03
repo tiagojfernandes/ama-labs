@@ -46,7 +46,7 @@ All VMs use **Standard_D2s_v3** size and have public IPs for remote access.
 The `init-lab.sh` script:
 1. **Clones this repository** (if running from curl)
 2. **Registers required Azure providers** automatically
-3. **Detects your Azure username** from your logged-in session
+3. **Prompts for a username** (with validation)
 4. **Prompts for a secure password** (with validation)
 5. **Deploys everything** using Terraform
 
@@ -55,7 +55,7 @@ The `init-lab.sh` script:
 After deployment:
 - **Linux VMs:** SSH on port 22
 - **Windows VMs:** RDP on port 3389
-- **Username:** Your Azure username (auto-detected)
+- **Username:** The username you provided
 - **Password:** The password you provided
 - **IPs:** Check Azure Portal for public IP addresses
 
