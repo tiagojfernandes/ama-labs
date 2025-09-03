@@ -32,7 +32,7 @@ resource "azurerm_network_interface" "lin_ama_portal_dep_nic" {
 resource "azurerm_network_interface_security_group_association" "lin_ama_portal_dep_nsg_assoc" {
   network_interface_id      = azurerm_network_interface.lin_ama_portal_dep_nic.id
   network_security_group_id = var.nsg_id
-  
+
   depends_on = [
     azurerm_network_interface.lin_ama_portal_dep_nic
   ]
@@ -69,7 +69,7 @@ resource "azurerm_linux_virtual_machine" "lin_ama_portal_dep" {
   tags = merge(var.tags, {
     Purpose = "DCR Portal Deployment Lab"
   })
-  
+
   depends_on = [
     azurerm_network_interface_security_group_association.lin_ama_portal_dep_nsg_assoc
   ]
@@ -520,5 +520,200 @@ resource "azurerm_windows_virtual_machine" "win_ama_policy_dep" {
 
   tags = merge(var.tags, {
     Purpose = "Policy Based Agent Deployment Lab"
+  })
+}
+
+# AutoUpgradePortal
+resource "azurerm_public_ip" "auto_upgrade_portal_pip" {
+  name                = "AutoUpgradePortal-pip"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  allocation_method   = "Static"
+  sku                 = "Standard"
+  zones               = ["2"]
+
+  tags = var.tags
+}
+
+resource "azurerm_network_interface" "auto_upgrade_portal_nic" {
+  name                = "AutoUpgradePortal-nic"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = var.subnet_id
+    private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.auto_upgrade_portal_pip.id
+  }
+
+  tags = var.tags
+}
+
+resource "azurerm_network_interface_security_group_association" "auto_upgrade_portal_nsg_assoc" {
+  network_interface_id      = azurerm_network_interface.auto_upgrade_portal_nic.id
+  network_security_group_id = var.nsg_id
+}
+
+resource "azurerm_linux_virtual_machine" "auto_upgrade_portal" {
+  name                = "AutoUpgradePortal"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  size                = "Standard_D2s_v3"
+  zone                = "2"
+
+  disable_password_authentication = false
+
+  network_interface_ids = [
+    azurerm_network_interface.auto_upgrade_portal_nic.id,
+  ]
+
+  admin_username = var.admin_username
+  admin_password = var.admin_password
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Premium_LRS"
+  }
+
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "0001-com-ubuntu-server-jammy"
+    sku       = "22_04-lts-gen2"
+    version   = "latest"
+  }
+
+  tags = merge(var.tags, {
+    Purpose = "Auto Upgrade Portal Lab"
+  })
+}
+
+# AutoUpgradePS
+resource "azurerm_public_ip" "auto_upgrade_ps_pip" {
+  name                = "AutoUpgradePS-pip"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  allocation_method   = "Static"
+  sku                 = "Standard"
+  zones               = ["2"]
+
+  tags = var.tags
+}
+
+resource "azurerm_network_interface" "auto_upgrade_ps_nic" {
+  name                = "AutoUpgradePS-nic"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = var.subnet_id
+    private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.auto_upgrade_ps_pip.id
+  }
+
+  tags = var.tags
+}
+
+resource "azurerm_network_interface_security_group_association" "auto_upgrade_ps_nsg_assoc" {
+  network_interface_id      = azurerm_network_interface.auto_upgrade_ps_nic.id
+  network_security_group_id = var.nsg_id
+}
+
+resource "azurerm_linux_virtual_machine" "auto_upgrade_ps" {
+  name                = "AutoUpgradePS"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  size                = "Standard_D2s_v3"
+  zone                = "2"
+
+  disable_password_authentication = false
+
+  network_interface_ids = [
+    azurerm_network_interface.auto_upgrade_ps_nic.id,
+  ]
+
+  admin_username = var.admin_username
+  admin_password = var.admin_password
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Premium_LRS"
+  }
+
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "0001-com-ubuntu-server-jammy"
+    sku       = "22_04-lts-gen2"
+    version   = "latest"
+  }
+
+  tags = merge(var.tags, {
+    Purpose = "Auto Upgrade PowerShell Lab"
+  })
+}
+
+# AutoUpgradeCLI
+resource "azurerm_public_ip" "auto_upgrade_cli_pip" {
+  name                = "AutoUpgradeCLI-pip"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  allocation_method   = "Static"
+  sku                 = "Standard"
+  zones               = ["2"]
+
+  tags = var.tags
+}
+
+resource "azurerm_network_interface" "auto_upgrade_cli_nic" {
+  name                = "AutoUpgradeCLI-nic"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = var.subnet_id
+    private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.auto_upgrade_cli_pip.id
+  }
+
+  tags = var.tags
+}
+
+resource "azurerm_network_interface_security_group_association" "auto_upgrade_cli_nsg_assoc" {
+  network_interface_id      = azurerm_network_interface.auto_upgrade_cli_nic.id
+  network_security_group_id = var.nsg_id
+}
+
+resource "azurerm_linux_virtual_machine" "auto_upgrade_cli" {
+  name                = "AutoUpgradeCLI"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  size                = "Standard_D2s_v3"
+  zone                = "2"
+
+  disable_password_authentication = false
+
+  network_interface_ids = [
+    azurerm_network_interface.auto_upgrade_cli_nic.id,
+  ]
+
+  admin_username = var.admin_username
+  admin_password = var.admin_password
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Premium_LRS"
+  }
+
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "0001-com-ubuntu-server-jammy"
+    sku       = "22_04-lts-gen2"
+    version   = "latest"
+  }
+
+  tags = merge(var.tags, {
+    Purpose = "Auto Upgrade CLI Lab"
   })
 }

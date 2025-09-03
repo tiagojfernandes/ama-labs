@@ -23,7 +23,7 @@ This creates a complete AMA training environment in **West US 3**:
 
 - **Resource Group:** `AMATraining`
 - **Log Analytics Workspace:** `AMATrainingWorkspace`
-- **8 Virtual Machines** in Availability Zone 2:
+- **11 Virtual Machines** in Availability Zone 2:
 
 | VM Name | OS | Purpose |
 |---------|----|----|
@@ -31,6 +31,9 @@ This creates a complete AMA training environment in **West US 3**:
 | LinAMAPSDeploy | Ubuntu 22.04 LTS | DCR PowerShell Deployment Lab |
 | LinAMACLIDeploy | Ubuntu 22.04 LTS | DCR CLI Deployment Lab |
 | LinAMAPolicyDep | Ubuntu 22.04 LTS | Agent Policy Based Deployment Lab |
+| AutoUpgradePortal | Ubuntu 22.04 LTS | Auto Upgrade Portal Lab |
+| AutoUpgradePS | Ubuntu 22.04 LTS | Auto Upgrade PowerShell Lab |
+| AutoUpgradeCLI | Ubuntu 22.04 LTS | Auto Upgrade CLI Lab |
 | WinAMAPortalDep | Windows Server 2022 | DCR Portal Deployment Lab |
 | WinAMAPSDeploy | Windows Server 2022 | DCR PowerShell Deployment Lab |
 | WinAMACLIDeploy | Windows Server 2022 | DCR CLI Deployment Lab |

@@ -24,6 +24,21 @@ output "linux_vms" {
       public_ip  = azurerm_public_ip.lin_ama_policy_dep_pip.ip_address
       private_ip = azurerm_network_interface.lin_ama_policy_dep_nic.private_ip_address
     }
+    AutoUpgradePortal = {
+      id         = azurerm_linux_virtual_machine.auto_upgrade_portal.id
+      public_ip  = azurerm_public_ip.auto_upgrade_portal_pip.ip_address
+      private_ip = azurerm_network_interface.auto_upgrade_portal_nic.private_ip_address
+    }
+    AutoUpgradePS = {
+      id         = azurerm_linux_virtual_machine.auto_upgrade_ps.id
+      public_ip  = azurerm_public_ip.auto_upgrade_ps_pip.ip_address
+      private_ip = azurerm_network_interface.auto_upgrade_ps_nic.private_ip_address
+    }
+    AutoUpgradeCLI = {
+      id         = azurerm_linux_virtual_machine.auto_upgrade_cli.id
+      public_ip  = azurerm_public_ip.auto_upgrade_cli_pip.ip_address
+      private_ip = azurerm_network_interface.auto_upgrade_cli_nic.private_ip_address
+    }
   }
 }
 
@@ -84,6 +99,27 @@ output "all_vm_connection_info" {
         LinAMAPolicyDep = {
           public_ip  = azurerm_public_ip.lin_ama_policy_dep_pip.ip_address
           private_ip = azurerm_network_interface.lin_ama_policy_dep_nic.private_ip_address
+          protocol   = "SSH"
+          port       = "22"
+          username   = var.admin_username
+        }
+        AutoUpgradePortal = {
+          public_ip  = azurerm_public_ip.auto_upgrade_portal_pip.ip_address
+          private_ip = azurerm_network_interface.auto_upgrade_portal_nic.private_ip_address
+          protocol   = "SSH"
+          port       = "22"
+          username   = var.admin_username
+        }
+        AutoUpgradePS = {
+          public_ip  = azurerm_public_ip.auto_upgrade_ps_pip.ip_address
+          private_ip = azurerm_network_interface.auto_upgrade_ps_nic.private_ip_address
+          protocol   = "SSH"
+          port       = "22"
+          username   = var.admin_username
+        }
+        AutoUpgradeCLI = {
+          public_ip  = azurerm_public_ip.auto_upgrade_cli_pip.ip_address
+          private_ip = azurerm_network_interface.auto_upgrade_cli_nic.private_ip_address
           protocol   = "SSH"
           port       = "22"
           username   = var.admin_username
